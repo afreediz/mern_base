@@ -14,15 +14,16 @@ const App = () => {
     <div className="">
       <Routes>
         <Route index element={<Home />} />
+        <Route path='/login' element={<Login />}/>
+        <Route path='/register' element={<Register />}/>
+        <Route path='/forget-password' element={<ForgetPassword />}/>
         <Route path="/user" element={<Protected />} >
-          <Route index element={<Profile />} />
+          <Route index element={<Home />} />
+          <Route path='/user/profile' element={<Profile />} />
         </Route>
         <Route path='/admin' element={<AdminProtected />}>
           <Route index element={<Dashboard />} />
         </Route>
-        <Route path='/login' element={<Login />}/>
-        <Route path='/register' element={<Register />}/>
-        <Route path='/forget-password' element={<ForgetPassword />}/>
         <Route path='*' element={<div className=''>Not found</div>} />
       </Routes>
       <ToastContainer position='bottom-center' />

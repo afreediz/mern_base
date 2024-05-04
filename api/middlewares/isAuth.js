@@ -4,7 +4,8 @@ const User = require('../models/user')
 const CustomError = require('../utils/CustomError')
 
 const isAuthenticated = asyncErrorHandler(async(req, res, next) => {
-    const token = req.headers.authorization
+    const token = req.headers.authorization.split(' ')[1]
+    if(!token) throw new CustomError("No Token Provided")
     const decoded = validateToken(token)
     const user = await User.findById(decoded._id).select('_id name role')
     if(!user) throw new CustomError("User not found")

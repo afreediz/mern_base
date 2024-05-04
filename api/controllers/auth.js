@@ -7,9 +7,8 @@ const { generateToken } = require("../helpers/jwt")
 
 const register = asyncErrorHandler(async(req, res)=>{
     console.log(req.body);
-    const { name, email, password, address, phone } = req.body
-    if(!name || !email || !password || !phone || !address ){
-        console.log(name, email, password, phone, address);
+    const { name, email, password } = req.body
+    if(!name || !email || !password ){
         throw new CustomError('Necessary details are not filled', 404)
     }
 
@@ -18,22 +17,13 @@ const register = asyncErrorHandler(async(req, res)=>{
 
     const hashedPassword = await hashPassword(password)
 
-    const user = await new User({
-        name, email:email.toLowerCase(), password:hashedPassword, phone, address
+    await new User({
+        name, email:email.toLowerCase(), password:hashedPassword
     }).save()
 
-    res.status(200).json({success:true, message:"User registration successfull",
-        user:{
-            _id:user._id,
-            email:user.email,
-            phone:user.phone,
-            address:user.address,
-            answer:user.answer
-        }
-    })
+    res.status(200).json({success:true, message:"User registration successfull"})
 })
 const login = asyncErrorHandler(async(req, res)=>{
-    console.log("body ",req.body);
     const {email, password} = req.body
     if(!email || !password) throw new CustomError("Necessary details are not filled", 404)
 
@@ -51,8 +41,6 @@ const login = asyncErrorHandler(async(req, res)=>{
             _id:user._id,
             name:user.name,
             email:user.email,
-            phone:user.phone,
-            address:user.address,
             role:user.role
         },
         token

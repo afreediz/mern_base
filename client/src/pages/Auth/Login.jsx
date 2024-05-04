@@ -24,9 +24,9 @@ const Login = () => {
       const response = await API.post('auth/login', data)
       toast.success(response.data.message)
       localStorage.setItem('token',response.data.token)
-      navigate('/')
+      navigate('/user')
     }catch(error){
-      toast.error(error.response.data.message)
+      toast.error(error.response?.data.message)
     }
   }
   return (

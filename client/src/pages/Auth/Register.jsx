@@ -28,8 +28,8 @@ const Register = () => {
       const response = await API.post('auth/register', data)
       toast.success(response.data.message)
       navigate('/login')
-    }catch({response}){
-      toast.error(response.data.message)
+    }catch(error){
+      toast.error(error.response?.data.message)
     }
   }
   return (
@@ -40,8 +40,6 @@ const Register = () => {
           <input type="text" value={data.name} name='name' onChange={onchange} className='w-full border-b-2 border-slate-300 p-2 mb-2' placeholder='Name' />
           <input type="text" value={data.email} name='email' onChange={onchange} className='w-full border-b-2 border-slate-300 p-2 mb-2' placeholder='Email' />
           <input type="text" value={data.password} name='password' onChange={onchange} className='w-full border-b-2 border-slate-300 p-2 mb-2' placeholder='Password' />
-          <input type="text" value={data.phone} name='phone' onChange={onchange} className='w-full border-b-2 border-slate-300 p-2 mb-2' placeholder='Phone' />
-          <input type="text" value={data.address} name='address' onChange={onchange} className='w-full border-b-2 border-slate-300 p-2 mb-2' placeholder='Address' />
           <button className='w-full py-2 bg-green-600 text-white font-normal'>Register</button>
         </form>
       </div>
